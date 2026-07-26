@@ -117,3 +117,39 @@ exploratory numbers — motivation only, not reportable.
   interpretation/rubric section at the end mapping outcomes to next actions.
 - Commits go straight to `main`; artifacts of long runs (transcripts, CSVs) are committed alongside
   the notebook that produced them for auditability.
+
+## Knowledge wiki (`wiki/` and `raw/`) — schema
+
+The repo carries an LLM-maintained research wiki (the "LLM Wiki" pattern). Claude writes and
+maintains **all** of `wiki/`; the user curates `raw/` and asks questions. Start any wiki work by
+reading `wiki/index.md`; `wiki/overview.md` holds the evolving thesis.
+
+**Layers.** `raw/` = immutable sources — read, never modify. `wiki/` = generated markdown, owned by
+Claude. This section = the schema.
+
+**Structure.** `wiki/{concepts,entities,experiments,sources,process}/` + `overview.md`, `index.md`,
+`log.md`. Kebab-case filenames; source pages prefixed `src-`, experiment pages `exp-NN-`. Pages
+cross-link with Obsidian wikilinks `[[page-name]]` (filename only, no folder). Every page has YAML
+frontmatter: `type` (concept|entity|experiment|source|process|meta), `tags`, `updated`; source pages
+add `raw:` and `ingested:`; experiment pages add `notebook:` and `status:`.
+
+**Operations.**
+- *Ingest:* user drops a source in `raw/` → read it → discuss takeaways → write
+  `wiki/sources/src-*.md` (claims + their fates, defects found) → update every affected concept/
+  entity/experiment page and `overview.md` → update `index.md` → append to `log.md`. Never modify
+  the raw file.
+- *Query:* read `index.md` first, drill into pages, answer with wikilink citations. Answers worth
+  keeping (comparisons, analyses, new connections) are filed back as wiki pages — explorations
+  compound.
+- *Lint:* on request, sweep for contradictions between pages, claims superseded by newer
+  experiments, orphan pages, missing cross-references, and concepts mentioned but lacking pages;
+  log the pass.
+
+**Log format.** Append-only, newest last: `## [YYYY-MM-DD] <op> | <title>` with
+`<op>` ∈ {ingest, query, lint, seed, experiment, decision}. Experiment outcomes and spec/lead
+decisions get entries, not just source ingests.
+
+**Discipline rules.** Experiment pages carry their exploratory/reportable status (spec §9) — never
+launder exploratory numbers into unqualified claims. When new evidence contradicts a page, update
+the page *and* note the supersession explicitly rather than silently rewriting. `index.md` and
+`log.md` are updated in the same pass as any page change.
