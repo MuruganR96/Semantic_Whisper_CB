@@ -40,5 +40,9 @@ embedding space, fitted **once, offline, on frozen models** — the load-bearing
 
 ## Open question
 
-Calibration corpus: WikiText (validated) vs LibriSpeech dev transcripts (domain-matched) — spec §10.3;
-proposed resolution: fit both, select by held-out retrieval on TUNE references, freeze the winner.
+Calibration corpus **and conditioning**: WikiText/silence (validated, [[exp-01-linear-alignment]]) vs
+LibriSpeech dev audio (deployment-matched) — spec §10.3. Instrument built:
+`whisper_sonar_audio_alignment_experiment.ipynb` fits `W_audio` on real-audio teacher-forced states
+(dev-clean/dev-other TUNE shards), re-runs the layer sweep and prefix probe under audio conditioning,
+and evaluates the silence-fitted `W` on audio states (transfer test). Awaiting a run; outcome will be
+filed as exp-04.

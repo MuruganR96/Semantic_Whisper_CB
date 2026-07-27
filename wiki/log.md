@@ -45,3 +45,11 @@ experiments reclassified exploratory.
 
 Wiki created from accumulated session knowledge: 5 concept pages, 3 experiment pages, 3 entity
 pages, 2 source pages, 1 process page, overview/index/log. Schema added to CLAUDE.md.
+
+## [2026-07-27] decision | Audio-conditioned alignment experiment created (spec §10.3 instrument)
+
+New notebook `whisper_sonar_audio_alignment_experiment.ipynb`: fits `W_audio` from real LibriSpeech
+audio (teacher-forced reference over true encoder output, dev-clean/dev-other TUNE shards), layer
+sweep + prefix probe under audio conditioning, and transfer evaluation of the silence-fitted `W` on
+audio states. Directly informs the spec §10.3 calibration decision; results to be filed as exp-04.
+Updated [[whisper-sonar-linear-map]] open-question section.
