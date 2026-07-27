@@ -62,3 +62,10 @@ Completes the calibration grid {WikiText, LibriSpeech} × {silence, audio}: vs E
 corpus effect, vs the audio notebook isolates the conditioning effect; cross-matrix section
 evaluates all available W artifacts on text-conditioned states. Produces
 `whisper_to_sonar_W_text_librispeech.pt`.
+
+## [2026-07-27] query | How does BPE-level trie fusion with SONAR gating work?
+
+Walkthrough answer filed as [[bpe-fusion-walkthrough]]: BPE trie = WHERE (one token per edge, 4
+surface forms, empty-suffix word starts), SONAR+W = HOW MUCH (word-level embeddings, per-step
+projected-state cosines), joined by node `hids`; interior-node max-aggregation realizes the lead's
+group-up idea without embedding subword fragments. Index updated.

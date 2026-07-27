@@ -16,6 +16,8 @@ Catalog of every wiki page. Updated on every ingest. Start at [[overview]].
 
 - [[contextual-biasing]] — the problem and the method family (shallow fusion vs deep biasing).
 - [[trie-token-biasing]] — BPE-token trie mechanics, surface forms, boost dynamics, failure modes.
+- [[bpe-fusion-walkthrough]] — end-to-end walkthrough: how the BPE trie and word-level SONAR gating
+  compose at decode time (incl. the free "group-up" property).
 - [[whisper-sonar-linear-map]] — the fixed matrix W: calibration recipe, validation, gotchas.
 - [[semantic-gating]] — gating boosts by SONAR similarity; the bare-word null result; H1a templates.
 - [[evaluation-metrics]] — normalization, recall definition, B-WER/U-WER, false alarms, shard rule.
