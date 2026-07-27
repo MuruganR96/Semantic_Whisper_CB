@@ -53,3 +53,12 @@ audio (teacher-forced reference over true encoder output, dev-clean/dev-other TU
 sweep + prefix probe under audio conditioning, and transfer evaluation of the silence-fitted `W` on
 audio states. Directly informs the spec §10.3 calibration decision; results to be filed as exp-04.
 Updated [[whisper-sonar-linear-map]] open-question section.
+
+## [2026-07-27] decision | Text-to-text LibriSpeech alignment notebook completes the 2×2 grid
+
+New notebook `whisper_sonar_text_alignment_librispeech.ipynb`: silence-conditioned states for
+LibriSpeech dev-clean/dev-other TUNE transcripts → SONAR (Exp-01's recipe, domain-matched corpus).
+Completes the calibration grid {WikiText, LibriSpeech} × {silence, audio}: vs Exp-01 isolates the
+corpus effect, vs the audio notebook isolates the conditioning effect; cross-matrix section
+evaluates all available W artifacts on text-conditioned states. Produces
+`whisper_to_sonar_W_text_librispeech.pt`.
