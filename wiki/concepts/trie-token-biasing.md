@@ -36,9 +36,19 @@ confirmed the mechanics.)
   every word boundary of every beam. At δ=3 with ~120 words this measurably corrupts unbiased words
   (U-WER 0.128 → 0.700).
 
-## Open improvements (ranked)
+## Improvements — status
 
-1. First-token asymmetry: reduced/zero boost on word-initial tokens, full δ only after ≥1 matched
-   token ("reward continuation, not initiation").
-2. Failure-arc bonus revocation on path abandonment.
-3. Per-token δ scheduling by trie depth (deeper match → higher confidence → larger boost).
+1. **First-token asymmetry — implemented (V2):** word-initial tokens earn η·δ (default η=0.25), full
+   δ only for continuations. `TrieSonarBiasProcessorV2`, pipeline notebook §7b.
+2. **Failure-arc bonus revocation — implemented (V2):** potential-based shaping — per-candidate
+   marginal Φ(hyp+token) − Φ(hyp), where Φ = locked completed-keyword bonuses + current partial
+   credit. Abandoning a partial (incl. EOS) subtracts exactly the earned credit; any finished
+   hypothesis's net shaping = completed keywords only. Verified by unit simulation (start η·δ /
+   continue δ / complete δ+λcos / abandon-net-zero). Design changes vs V1: semantic term λ·cos now
+   granted **once at completion** (unrevocable spend removed from mid-word tokens); greedy
+   longest-suffix automaton with completion-reset (overlapping-keyword continuations dropped —
+   documented simplification); revocation applied as a whole-row broadcast, so EOS-mid-word is
+   covered for free. **Not yet evaluated at scale** — needs the error-driven eval rerun with V2
+   under the spec's U-WER-constrained sweep.
+3. Open: per-token δ scheduling by depth; small revocable per-token semantic advance (η_sem·λ·cos)
+   if sweeps show rare targets dying mid-word under completion-only semantics.

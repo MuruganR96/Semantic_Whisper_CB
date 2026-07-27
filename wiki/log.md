@@ -69,3 +69,12 @@ Walkthrough answer filed as [[bpe-fusion-walkthrough]]: BPE trie = WHERE (one to
 surface forms, empty-suffix word starts), SONAR+W = HOW MUCH (word-level embeddings, per-step
 projected-state cosines), joined by node `hids`; interior-node max-aggregation realizes the lead's
 group-up idea without embedding subword fragments. Index updated.
+
+## [2026-07-27] decision | V2 processor: first-token asymmetry + failure-arc revocation implemented
+
+`TrieSonarBiasProcessorV2` added to the pipeline notebook (§7b, comparison harness §8c):
+potential-based boost shaping — start η·δ, continue δ, complete δ+λ·cos (semantic term moved to
+completion), abandon −E (exact revocation, EOS included via row broadcast). Marginal arithmetic
+verified by standalone simulation (abandoned excursions net zero; completed chains locked).
+Directly targets [[exp-03-error-driven-eval]]'s two damage mechanisms. Updated
+[[trie-token-biasing]] improvements section. Scale evaluation pending (error-driven rerun with V2).
