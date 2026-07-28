@@ -45,9 +45,15 @@ points (the gate adds no information).
   selection (δ, λ, prompt template) — and **DEVTEST (75%)** — development-time measurement. Utterance
   IDs for every shard are recorded in the run artifacts.
 - **Keyword lists (decision point for lead — §10.2):**
-  - *Proposed primary:* per-utterance biasing lists in the style of the published deep-biasing
-    literature — rare words from the utterance's own reference plus **N = 100 rarity-matched
-    distractors** absent from that reference; comparable with prior published work.
+  - *Proposed primary — IS21 deep-biasing benchmark (Le et al., Interspeech 2021;
+    `fbai-speech/is21_deep_bias`):* per-utterance biasing lists — rare words defined as outside the
+    5,000 most frequent LibriSpeech-training words, plus distractor variants (N ∈ {100, 500, 1000};
+    **N = 100 default for tuning**, larger N as robustness checks). Development uses lists rebuilt on
+    the dev splits with the benchmark's own recipe; the **officially released test-split lists are
+    reserved for Phase 4 final reporting**, making our numbers directly comparable with the
+    published deep-biasing literature. (Caveat for lead: exploratory mining touched `test-other`
+    transcripts — §9; whether IS21 `test-other` reporting remains admissible is part of decision
+    §10.2.)
   - *Secondary (headroom view):* corpus-level error-driven list — words `whisper-base` (B0)
     substituted/deleted on the shard, rarity-filtered, plus equal-count distractors mined outside the
     shard. Guarantees measurable headroom (exploratory finding: text-rarity alone yields lists the
@@ -80,7 +86,8 @@ collapse whitespace), applied identically to references and hypotheses.
    total occurrences; occurrence counts reported alongside.
 2. **WER** (overall, jiwer), and **B-WER / U-WER** decomposition: substitutions and deletions
    attributed by the reference word (biased-list word → B-WER, else U-WER); insertions attributed by
-   the hypothesis word.
+   the hypothesis word — following the IS21 deep-biasing benchmark's protocol (Le et al. 2021), so
+   the decomposition is directly comparable with published results on the same lists.
 3. **False alarms:** biasing-list words inserted, or substituted in where the reference word is not
    that keyword, summed over the corpus.
 4. **Oracle gate separation (offline, H1a):** mean cos(keyword embedding, SONAR embedding of its own
@@ -157,9 +164,11 @@ Notebooks 1–3 (this repository) predate this spec:
 1. **Prompt template candidate set** for H1a — proposed: bare word; `A speech that includes
    "{keyword}"`; `The speaker mentions {keyword}`; template selection strictly by §5.4 diagnostic on
    TUNE. Additions welcome.
-2. **Keyword list protocol** — per-utterance lists with N=100 distractors (literature-comparable,
-   proposed primary) vs. corpus-level error-driven lists (headroom view, proposed secondary): report
-   both, or one only?
+2. **Keyword list protocol** — adopt the IS21 deep-biasing benchmark as primary
+   (dev lists via the benchmark recipe for tuning; official released lists at Phase 4; N = 100
+   default, {500, 1000} as robustness checks), with corpus-level error-driven lists as the secondary
+   headroom view: report both, or one only? Also: given §9's disclosure, is IS21 `test-other`
+   reporting admissible, or do we report `test-clean` only?
 3. **`W` calibration corpus** — WikiText (validated in exploration) vs. LibriSpeech dev transcripts
    (domain-matched; would need a small held-out check). Proposed: fit both once, select by held-out
    retrieval on TUNE references, freeze the winner.

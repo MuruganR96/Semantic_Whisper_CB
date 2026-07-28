@@ -78,3 +78,17 @@ completion), abandon −E (exact revocation, EOS included via row broadcast). Ma
 verified by standalone simulation (abandoned excursions net zero; completed chains locked).
 Directly targets [[exp-03-error-driven-eval]]'s two damage mechanisms. Updated
 [[trie-token-biasing]] improvements section. Scale evaluation pending (error-driven rerun with V2).
+
+## [2026-07-28] decision | IS21 deep-biasing benchmark adopted for validation/evaluation
+
+Per user direction: the IS21 benchmark (Le et al., Interspeech 2021) becomes the primary keyword-list
+protocol — dev lists rebuilt via the benchmark recipe for tuning, official test lists reserved for
+Phase 4; N=100 default. Error-driven lists retained as secondary headroom view. Spec §3/§5/§10.2 and
+the Phase 0 review deck updated; entity page [[is21-deep-bias]] filed; index updated. Pending: lead
+approval §10.2 incl. test-other admissibility.
+
+## [2026-07-28] decision | Phase 0 review deck created
+
+`phase0_spec_review.pptx` — 14 slides for the lead review: hypotheses, exploratory evidence,
+baselines, IS21-based data protocol, frozen conditions, metrics, pre-registered criteria, ready
+instruments, phase status, and the seven decisions requested (spec §10 + reviewer assignment).

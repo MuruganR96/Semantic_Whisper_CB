@@ -35,6 +35,8 @@ Catalog of every wiki page. Updated on every ingest. Start at [[overview]].
 - [[whisper]] — model facts that bit us: BPE surface forms, layer indexing, KV-cache interplay.
 - [[sonar]] — 1024-d sentence encoder; install gotchas; word-level weakness.
 - [[librispeech]] — splits used, streaming pattern, test-other quarantine.
+- [[is21-deep-bias]] — the Interspeech'21 biasing benchmark: per-utterance rare-word lists +
+  distractors; adopted as primary eval protocol (pending §10.2 approval).
 
 ## Sources
 
