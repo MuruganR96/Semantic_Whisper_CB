@@ -171,12 +171,17 @@ Notebooks 1–3 (this repository) predate this spec:
    default, {500, 1000} as robustness checks), with corpus-level error-driven lists as the secondary
    headroom view: report both, or one only? Also: given §9's disclosure, is IS21 `test-other`
    reporting admissible, or do we report `test-clean` only?
-3. **`W` calibration — now measured, approval requested:** adopt audio-conditioned
+3. **`W` calibration — 2×2 grid complete, approval requested:** adopt audio-conditioned
    `whisper_to_sonar_W_audio.pt` (LibriSpeech dev-TUNE audio, layer 3). Evidence: 1.000 held-out
    top-1 on both dev splits vs 0.28/0.31 for the silence-fitted `W` on identical audio-conditioned
    pools (paired cosine 0.48–0.51 vs ≈0.13); 25%-prefix retrieval improves 0.29 → 0.39/0.41.
-   Note the hook layer changes 4 → 3 if adopted. Caveat: 67/71-utterance pools saturate
-   full-sentence retrieval; the contrast is like-for-like on identical pools.
+   The completed grid decomposes the effect: **corpus is minor** (W_wikitext 0.97/0.92 vs W_text_ls
+   1.000 on LS text states), **conditioning is decisive and asymmetric** (W_audio transfers to text
+   states at 0.97/0.99; silence-fitted matrices do not transfer to audio states), and text-only
+   calibration collapses in the early-prefix regime (0.06/0.13 at 25% vs audio's 0.39/0.41) —
+   `W_audio` is best or near-best in every cell. Note the hook layer changes 4 → 3 if adopted.
+   Caveat: 67/71-utterance pools saturate full-sentence retrieval; contrasts are like-for-like on
+   identical pools.
 4. **Thresholds** — 5-point recall margin, 1.05× U-WER budget, 0.05 separation go/no-go: acceptable?
 5. **Trie group-up for embedding cost** (your suggestion): proposed to defer to a follow-up spec —
    at current list sizes (≤ a few hundred keywords) per-keyword embedding is one-off and cheap; the

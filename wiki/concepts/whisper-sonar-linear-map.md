@@ -47,3 +47,9 @@ only 0.28/0.31 top-1 on audio-conditioned states (paired cosine 0.48 → 0.13), 
 `whisper_to_sonar_W_audio.pt`, best layer **3** (note: layer choice shifts from 4 under silence to 3
 under audio — hooks must follow). Early-prefix retrieval also improves (0.29 → 0.39/0.41 at 25%).
 Lead approval pending (spec §10.3).
+
+**2×2 grid complete ([[exp-05-text-ls-alignment]]):** corpus effect minor (W_wikitext 0.97/0.92 vs
+W_text_ls 1.000 on LS text states); conditioning decisive and **asymmetric** — `W_audio` transfers
+to text states at 0.97/0.99, silence-fitted matrices do not transfer to audio; text-only calibration
+collapses in the early-prefix regime (0.06/0.13 at 25%). `W_audio` is best or near-best in every
+cell.

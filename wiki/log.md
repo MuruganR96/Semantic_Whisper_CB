@@ -101,3 +101,12 @@ GPU run (n_per_split=1000, dev TUNE shards): `W_audio` = 1.000 held-out top-1 on
 [[exp-04-audio-alignment]]; updated [[whisper-sonar-linear-map]] (supersession noted),
 [[overview]], spec §4/§10.3, and the review deck (new results slide; decision 3 now cites the
 measurement). Proposed frozen artifact: `whisper_to_sonar_W_audio.pt`.
+
+## [2026-07-28] experiment | Exp-05: text-to-text LibriSpeech run — 2×2 grid complete
+
+GPU run (n_per_split=1000): `W_text_ls` 1.000 in-domain (best layer 4, matching Exp-01's silence
+result); corpus effect minor (W_wikitext 0.97/0.92 on LS text states); conditioning decisive and
+asymmetric (W_audio → text states 0.97/0.99; silence-fitted → audio states 0.28/0.31); text-only
+calibration collapses at 25% prefix (0.06/0.13). Filed [[exp-05-text-ls-alignment]]; updated
+[[whisper-sonar-linear-map]], index, spec §10.3, and the review deck (results slide now presents the
+completed grid). `W_audio` confirmed best-or-near-best in every cell.

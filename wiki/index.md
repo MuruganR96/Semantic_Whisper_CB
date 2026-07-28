@@ -31,6 +31,8 @@ Catalog of every wiki page. Updated on every ingest. Start at [[overview]].
   vandalizes transcripts; semantic gate ≈ null, as its 0.028 diagnostic predicted. 🔬
 - [[exp-04-audio-alignment]] — audio-conditioned map holds perfectly (1.000 top-1 both dev splits);
   silence-fitted W does NOT transfer (0.28/0.31) → calibrate on audio, layer 3. ✅
+- [[exp-05-text-ls-alignment]] — completes the 2×2: corpus effect minor, conditioning decisive and
+  asymmetric; text-only calibration collapses at early prefixes (0.06/0.13 at 25%). ✅
 
 ## Entities
 
