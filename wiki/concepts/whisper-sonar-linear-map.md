@@ -38,11 +38,12 @@ embedding space, fitted **once, offline, on frozen models** — the load-bearing
   is the evidence this transfer works.
 - Full-sequence states at decode time require `use_cache=False` (see [[whisper]]).
 
-## Open question
+## Calibration question — answered ([[exp-04-audio-alignment]], 2026-07-28)
 
-Calibration corpus **and conditioning**: WikiText/silence (validated, [[exp-01-linear-alignment]]) vs
-LibriSpeech dev audio (deployment-matched) — spec §10.3. Instrument built:
-`whisper_sonar_audio_alignment_experiment.ipynb` fits `W_audio` on real-audio teacher-forced states
-(dev-clean/dev-other TUNE shards), re-runs the layer sweep and prefix probe under audio conditioning,
-and evaluates the silence-fitted `W` on audio states (transfer test). Awaiting a run; outcome will be
-filed as exp-04.
+**Supersedes the earlier open question.** The transfer test settled it: the silence-fitted `W` keeps
+only 0.28/0.31 top-1 on audio-conditioned states (paired cosine 0.48 → 0.13), while `W_audio`
+(fitted on real-audio teacher-forced states, dev TUNE shards) achieves 1.000 on both splits.
+**Calibration must be conditioning-matched:** proposed frozen artifact =
+`whisper_to_sonar_W_audio.pt`, best layer **3** (note: layer choice shifts from 4 under silence to 3
+under audio — hooks must follow). Early-prefix retrieval also improves (0.29 → 0.39/0.41 at 25%).
+Lead approval pending (spec §10.3).

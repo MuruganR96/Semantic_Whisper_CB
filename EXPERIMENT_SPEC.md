@@ -68,11 +68,13 @@ No training. All models frozen:
 - **ASR:** `openai/whisper-base` (HF revision pinned in artifacts).
 - **Text embedder:** SONAR `text_sonar_basic_encoder` (package version pinned).
 - **Calibration of `W` (the only fitted artifact):** ridge regression (α selected on a held-out
-  validation shard by top-1 retrieval) from Whisper decoder layer-4 mean-pooled, L2-normalized text
-  states to unit-norm SONAR sentence embeddings; calibration corpus is a decision point (§10.3):
-  WikiText sentences (exploratory default, top-1 retrieval ≈ 100% held-out) vs. LibriSpeech dev
-  transcripts (domain-matched). `W` is fitted once, checksummed, and frozen before Phase 3; it is
-  never refitted after approval.
+  validation shard by top-1 retrieval) from Whisper decoder mean-pooled, L2-normalized states to
+  unit-norm SONAR sentence embeddings. **Proposed (backed by measurement, §10.3): audio-conditioned
+  calibration** — states teacher-forced over real LibriSpeech dev-TUNE audio, best layer **3**
+  (`whisper_to_sonar_W_audio.pt`). Supporting run (2026-07-28, ≈1,385 pairs): held-out top-1 = 1.000
+  on both dev splits (chance ≈ 1.5%), while the silence/WikiText-fitted `W` collapses to 0.28/0.31
+  on the same audio-conditioned pools — conditioning-matched calibration is required at deployment.
+  `W` is fitted once, checksummed, and frozen before Phase 3; it is never refitted after approval.
 
 ## 5. Evaluation metrics
 
@@ -169,9 +171,12 @@ Notebooks 1–3 (this repository) predate this spec:
    default, {500, 1000} as robustness checks), with corpus-level error-driven lists as the secondary
    headroom view: report both, or one only? Also: given §9's disclosure, is IS21 `test-other`
    reporting admissible, or do we report `test-clean` only?
-3. **`W` calibration corpus** — WikiText (validated in exploration) vs. LibriSpeech dev transcripts
-   (domain-matched; would need a small held-out check). Proposed: fit both once, select by held-out
-   retrieval on TUNE references, freeze the winner.
+3. **`W` calibration — now measured, approval requested:** adopt audio-conditioned
+   `whisper_to_sonar_W_audio.pt` (LibriSpeech dev-TUNE audio, layer 3). Evidence: 1.000 held-out
+   top-1 on both dev splits vs 0.28/0.31 for the silence-fitted `W` on identical audio-conditioned
+   pools (paired cosine 0.48–0.51 vs ≈0.13); 25%-prefix retrieval improves 0.29 → 0.39/0.41.
+   Note the hook layer changes 4 → 3 if adopted. Caveat: 67/71-utterance pools saturate
+   full-sentence retrieval; the contrast is like-for-like on identical pools.
 4. **Thresholds** — 5-point recall margin, 1.05× U-WER budget, 0.05 separation go/no-go: acceptable?
 5. **Trie group-up for embedding cost** (your suggestion): proposed to defer to a follow-up spec —
    at current list sizes (≤ a few hundred keywords) per-keyword embedding is one-off and cheap; the

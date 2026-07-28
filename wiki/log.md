@@ -92,3 +92,12 @@ approval §10.2 incl. test-other admissibility.
 `phase0_spec_review.pptx` — 14 slides for the lead review: hypotheses, exploratory evidence,
 baselines, IS21-based data protocol, frozen conditions, metrics, pre-registered criteria, ready
 instruments, phase status, and the seven decisions requested (spec §10 + reviewer assignment).
+
+## [2026-07-28] experiment | Exp-04: audio-conditioned alignment run — §10.3 answered
+
+GPU run (n_per_split=1000, dev TUNE shards): `W_audio` = 1.000 held-out top-1 on both splits
+(chance ≈1.5%); silence-fitted `W` transfers at only 0.28/0.31 on the same audio states (paired cos
+0.48→0.13); best layer shifts 4→3; 25%-prefix retrieval improves 0.29→0.39/0.41. Filed
+[[exp-04-audio-alignment]]; updated [[whisper-sonar-linear-map]] (supersession noted),
+[[overview]], spec §4/§10.3, and the review deck (new results slide; decision 3 now cites the
+measurement). Proposed frozen artifact: `whisper_to_sonar_W_audio.pt`.

@@ -45,7 +45,9 @@ reportable numbers.
    see [[trie-token-biasing]].)
 3. Word-level vs phrase-level biasing entries: if H1a fails, the redesign moves to phrase/topic
    embeddings ([[semantic-gating]]).
-4. W calibration corpus: WikiText (validated) vs LibriSpeech dev transcripts (domain-matched)?
+4. ~~W calibration corpus~~ **Answered** ([[exp-04-audio-alignment]]): calibration must be
+   audio-conditioned — silence-fitted `W` keeps only 0.28/0.31 top-1 on deployment-distribution
+   states vs 1.000 for `W_audio` (layer 3). Lead approval of the artifact swap pending (§10.3).
 
 ## Map of the wiki
 
